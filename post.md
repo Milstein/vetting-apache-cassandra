@@ -43,7 +43,7 @@ By this point we basically had at least the corner pieces of the puzzle, and may
 
 In hindsight, an important part of each of our tests was that it ended in some sort of failure. In most cases, it had something to do with average and max response times reaching ridiculous levels. These were represented by steeply inclined walls on the far right of our graphs, and they gave us confidence in two things. The first was that the database could handle orders of magnitude more traffic than we planned to throw at it any time soon. The second was that we'd know what kinds of growth would impact performance and what to do about it.
 
-*insert annotated image of one of our charts here*
+![7-Year Baseline Test Graph](https://openmerchantaccount.com/img/vf_7yr_3n_baseline_chart_a2.png "Note the rapid growth in response times, as if the tubes are getting clogged.")
 
 Knowing where each database would fail against our use cases and with our data model was key, though. Imagine if we had simply tested our expected user loads and data volumes, even at our biggest seven year baseline, and called it a draw when several databases handled them marvellously. If one we chose that way would have failed to maintain low response times with, let's say, twice as many concurrent users, or thirty percent more data, we'd probably have found out in production sometime. Definitely not cool.
 
