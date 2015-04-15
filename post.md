@@ -1,6 +1,6 @@
 ## Prologue
 
-Check out *link to ZL’s article* for a story about the data model that drove most of our research and performance testing.
+Check out [Event-driven Data or: How I Learned to Stop Living in the Present and Travel Through Time](https://www.airpair.com/event-sourcing/posts/event-driven-data) for a story about the data model that drove most of our research and performance testing.
 
 Before I get into the setup, I want to clear the air. This isn't some writeup about how great Cassandra is as a database or how NoSQL is the new world order. This is a look back at the long process by which we proved to ourselves and our colleagues that Cassandra was a great fit for our project. What I hope you, the reader, can take away from this is a sense of how we approached a challenge of this scale and nebulousness, and how we avoided feeling overwhelmed by breaking the project up into fun little chunks. Our actual metrics will be largely irrelevant here.
 
