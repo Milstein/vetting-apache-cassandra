@@ -30,6 +30,23 @@ The cloning process was super helpful when we wanted to experiment with new sett
 
 We had a handful of baseline snapshots based on varying data volumes from which we cloned all of our environments, and it was a pretty cool little side project to figure out what those baselines should be. Our team created projections for the new feature's customer base, and thus also the data volume, out to seven years. We chose a handful of milestones from those projections, generally where something would grow by an order of magnitude, maybe the number of users, the number of records of a particular type, or the average rate of changes to those records. Variance in user profiles gave us some interesting data sets to play with. For example, some objects in our system might be composed of a dozen elements, where others might be thousands, but we need great performance for both. This variance created excellent learning opportunities around best practices for query patterns and denormalization.
 
+```java,linenums=true
+private void createFourYearData() {
+    IdentityEvent identityEvent;
+    for (int i = 0; i < numberOfIdentities; i++) {
+        identityEvent = createNewIdentityEvent();
+        identityEventDao.save(identityEvent);
+        eventDao.save(createNewEvent(identityEvent.getNetworkId(), ID_EVENT));
+        eventDao.save(createNewEvent(identityEvent.getNetworkId(), ADDR_EVENT));
+        for (int j = 0; j < partitionSize; j++) {
+            addressEventDao.save(createNewAddressEvent(identityEvent.getNetworkId()));
+        }
+    }
+}
+```
+
+The above code snippet highlights the simple scaling properties of our baselines. Over time, we expect more "identities" in the system, and also more "address change" events associated with each identity. Our target databases reflected growth in these dimensions in vastly different ways.
+
 ### Creating Tools, Enabling Repeatability
 
 We had an array of tests laid out for each database, and were prepared to gather more metrics than even seemed reasonable. We had read through some very cool articles in the Jepsen series on [Aphyr.com](https://aphyr.com/posts/294-call-me-maybe-cassandra), and were inspired to build up our own toolkit, albeit somewhat mashed in with our in-house code repositories. Not only would it serve our immediate needs, but it would help others at the company with a similar mission. Not to mention, if our results ever seemed unbelievable, we could reproduce them in a jiffy and say, "I told you so."
